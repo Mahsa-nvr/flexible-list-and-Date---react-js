@@ -1,5 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
 import Person from './Persons';
+// import Radium, { StyleRoot } from 'radium';
+
+
+const StyledButton = styled.button`
+  background-color: ${props => props.alt ? 'red' : 'green'};
+  color: white;
+  border: 1px solid blue;
+  cursor: pointer;
+  
+  &:hover {
+      background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+      color: black;
+  }
+`
+
 
 class Listperson extends React.Component {
 
@@ -41,6 +57,18 @@ class Listperson extends React.Component {
     }
     render() {
 
+        //we can define object and set css property like this and we can change them in object person 
+        const style={
+          backgroundColor: 'green',
+          color: 'white',
+          border: '1px solid blue',
+          cursor: 'pointer',
+          ':hover'  :{
+              backgroundColor: 'lightgreen',
+              color: 'black'
+          }
+        }
+
         let persons = null;
         if(this.state.show) {
             persons = (
@@ -57,16 +85,45 @@ class Listperson extends React.Component {
                  })}
                 </div>
             )
+
+            //we can change each property of style object
+            // style.backgroundColor = 'red';
+            // style[':hover']= {
+            //     backgroundColor: 'salmon',
+            //     color: 'black'
+            // }
+        }
+
+        const classes = [];
+        if (this.state.totalPerson.length <= 2) {
+            classes.push('red'); // classes = ['red']
+        }
+        if (this.state.totalPerson.length <= 1) {
+            classes.push('bold'); // classes = ['red' , 'bold']
         }
 
         return (
-            <div>
-                hellllooo person list
-                <button onClick={this.toggle}>toggle</button>
+            // <StyleRoot >
+            <div className="App">
+                <h1>hellllooo person list</h1>
+
+                // we can define className with array and js and we must join them to convert array to string
+                 <div className={classes.join(' ')}>This is really working!</div>
+                {/* <button 
+                style = {style}
+                onClick={this.toggle}>toggle
+                </button> */}
+                <StyledButton 
+                alt={this.state.show}
+                onClick={this.toggle}>toggle
+                </StyledButton>
                 {persons}
             </div>
+            // </StyleRoot>
         )
     }
 }
 
+//if we use radium we must define that like below
+// export default Radium(Listperson);
 export default Listperson;

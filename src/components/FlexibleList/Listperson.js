@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Person from './Persons';
 // import Radium, { StyleRoot } from 'radium';
-
+import ErrorBoundary from './../ErrorBoundary/ErrorBoundary';
 
 const StyledButton = styled.button`
   background-color: ${props => props.alt ? 'red' : 'green'};
@@ -74,7 +74,8 @@ class Listperson extends React.Component {
             persons = (
                 <div>
                  {this.state.totalPerson.map((person, index) => {
-                     return <Person
+                     return <ErrorBoundary key={person.id}>
+                      <Person
                      
                      click={() => this.deleteHandler(index)}
                      name={person.name}
@@ -82,6 +83,7 @@ class Listperson extends React.Component {
                      key={index}
                      changed={(event) => this.nameChangedHandler(event, person.id)}
                      />
+                     </ErrorBoundary>
                  })}
                 </div>
             )
@@ -107,7 +109,7 @@ class Listperson extends React.Component {
             <div className="App">
                 <h1>hellllooo person list</h1>
 
-                // we can define className with array and js and we must join them to convert array to string
+                {/* // we can define className with array and js and we must join them to convert array to string */}
                  <div className={classes.join(' ')}>This is really working!</div>
                 {/* <button 
                 style = {style}
